@@ -17,4 +17,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, homeActivity.class);
         startActivity(intent);
     }
+
+    public void vendorMethod(View view){
+        Intent intent = new Intent(this, vendorActivity.class);
+        startActivity(intent);
+    }
 }
