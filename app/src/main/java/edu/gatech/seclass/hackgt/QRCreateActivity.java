@@ -1,8 +1,8 @@
 package edu.gatech.seclass.hackgt;
 
 import android.graphics.Bitmap;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,10 +14,9 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
+
 public class QRCreateActivity extends AppCompatActivity {
 
-    private EditText etInput;
-    private Button btnCreateQr;
     private ImageView imageView;
 
     @Override
@@ -25,29 +24,22 @@ public class QRCreateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_create);
 
-        etInput = (EditText) findViewById(R.id.etInput);
-        btnCreateQr = (Button) findViewById(R.id.btnCreate);
         imageView = (ImageView) findViewById(R.id.imageView);
 
-        btnCreateQr.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                String text = etInput.getText().toString().trim();
+        String transactionId = "5";
+        String text = transactionId.trim();
 
-                if(text != null) {
-                    MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        if (text != null) {
+            MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
 
-                    try {
-                        BitMatrix bitMatrix = multiFormatWriter.encode(text, BarcodeFormat.QR_CODE, 1500,1500);
-                        BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-                        Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
-                        imageView.setImageBitmap(bitmap);
-                    } catch (WriterException e) {
-                        e.printStackTrace();
-                    }
-
-
-                }
+            try {
+                BitMatrix bitMatrix = multiFormatWriter.encode(text, BarcodeFormat.QR_CODE, 1440, 1440);
+                BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+                Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+                imageView.setImageBitmap(bitmap);
+            } catch (WriterException e) {
+                e.printStackTrace();
             }
-        });
+        }
     }
 }
