@@ -2,6 +2,7 @@ package edu.gatech.seclass.hackgt;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,10 +18,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.json.*;
 
 public class vendorActivity extends AppCompatActivity {
 
     public String restOut = "";
+    public String transactionId;
 
     private class GetUrlContentTask extends AsyncTask<String, Integer, String> {
         protected String doInBackground(String... urls) {
@@ -31,6 +36,15 @@ public class vendorActivity extends AppCompatActivity {
 //            connection.setDoOutput(true);
 //            connection.setConnectTimeout(5000);
 //            connection.setReadTimeout(5000);
+                if(urls[0].substring(7,14).equals("gateway")){
+                    connection.setRequestProperty("Content-Type", "application/json");
+                    connection.setRequestProperty("Accept", "application/json");
+                    connection.setRequestProperty("nep-application-key", "8a0084a165d712fd01668f74057f0069");
+                    connection.setRequestProperty("nep-organization", "ncr-market");
+                    connection.setRequestProperty("nep-enterprise-unit", "7c54465e9f5344598276ec1f941f5a3c");
+                    connection.setRequestProperty("nep-service-version", "2.2.1:2");
+                    connection.setRequestProperty("Authorization", "Basic YWNjdDp0ZWFtNUB0ZWFtNXNlcnZpY2V1c2VyOm5jcnBhc3N3b3Jk");
+                }
                 connection.connect();
                 BufferedReader rd = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String content = "", line;
@@ -54,6 +68,10 @@ public class vendorActivity extends AppCompatActivity {
 //            hid.setText(result);
             restOut = result;
             Log.d("--------------",result);
+            transactionId = result.substring(6,8) + transactionId;
+            Log.d("--------------",transactionId);
+
+            moveOn();
 
         }
 
@@ -71,6 +89,10 @@ public class vendorActivity extends AppCompatActivity {
         List<String> spinnerArray = new ArrayList<String>();
         spinnerArray.add("Organic Maple & Onion Baked Beans");
         spinnerArray.add("Instant Mashed Potato");
+        spinnerArray.add("Beef Bone Broth");
+        spinnerArray.add("Flip Greek Yogurt Tropical Escape");
+        spinnerArray.add("Lemon Poppy Seed Muffins");
+
         ArrayAdapter<String> quizOptions = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,spinnerArray);
         quizOptions.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -83,8 +105,11 @@ public class vendorActivity extends AppCompatActivity {
         spinner3.setAdapter(quizOptions);
 
         //Add to hashmap
-        hm.put("Organic Maple & Onion Baked Beans","2116");
-        hm.put("Instant Mashed Potato","5661");
+        hm.put("Organic Maple & Onion Baked Beans","2116-2.14");
+        hm.put("Instant Mashed Potato","5661-1.18");
+        hm.put("Beef Bone Broth","37015-11.7");
+        hm.put("Flip Greek Yogurt Tropical Escape","3458-11.57");
+        hm.put("Lemon Poppy Seed Muffins","3236-2.77");
     }
 
     public void generateMethod(View view){
@@ -96,16 +121,25 @@ public class vendorActivity extends AppCompatActivity {
         Spinner spinner3 = (Spinner) findViewById(R.id.spinner3);
         items[2] = spinner3.getSelectedItem().toString();
 
-        String transactionId = "12" + "+" + items[0] + "+" + items[1] + "+" + items[2];
+        Double total = 0.0;
+        for(int i = 0; i < items.length; i++){
+            String price = hm.get(items[i]).split("-")[1];
+            total += Double.parseDouble(price);
+        }
+
+        transactionId = "+" + items[0] + "+" + items[1] + "+" + items[2];
+
         final String ttg = "------------------";
 
         //*****Get it to find the price for each item****
-        new GetUrlContentTask().execute("https://frozen-dawn-65177.herokuapp.com/test");
+        new GetUrlContentTask().execute("https://frozen-dawn-65177.herokuapp.com/order/"+total.toString());
+        new GetUrlContentTask().execute("http://gateway-staging.ncrcloud.com/catalog/item-prices/7770/1");
+        String id = "1";
 
 
-        Log.d("Hello","World");
-        Log.d("Hello",restOut);
+    }
 
+    public void moveOn(){
         Intent intent = new Intent(this, QRCreateActivity.class);
         intent.putExtra(EXTRA_MESSAGE, transactionId);
         startActivity(intent);
