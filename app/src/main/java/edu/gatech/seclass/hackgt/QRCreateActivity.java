@@ -14,7 +14,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
-public class qrScanActivity extends AppCompatActivity {
+public class QRCreateActivity extends AppCompatActivity {
 
     private EditText etInput;
     private Button btnCreateQr;
