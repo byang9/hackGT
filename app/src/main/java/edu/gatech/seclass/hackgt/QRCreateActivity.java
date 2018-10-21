@@ -23,11 +23,11 @@ public class QRCreateActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qr_scan);
+        setContentView(R.layout.activity_qr_create);
 
-        etInput = findViewById(R.id.etInput);
-        btnCreateQr = findViewById(R.id.btnCreate);
-        imageView = findViewById(R.id.imageView);
+//        etInput = findViewById(R.id.etInput);
+//        btnCreateQr = findViewById(R.id.btnCreate);
+//        imageView = findViewById(R.id.imageView);
 
 //        btnCreateQr.setOnClickListener(new View.OnClickListener() {
 //            public void onClick(View view) {
