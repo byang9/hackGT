@@ -23,7 +23,7 @@ public class qrScanActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_qr_scan);
 
         etInput = findViewById(R.id.etInput);
         btnCreateQr = findViewById(R.id.btnCreate);

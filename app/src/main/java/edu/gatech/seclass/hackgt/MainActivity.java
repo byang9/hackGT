@@ -32,4 +32,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, vendorActivity.class);
         startActivity(intent);
     }
+
+    public void jamesMethod(View view){
+        Intent intent = new Intent(this, qrScanActivity.class);
+        startActivity(intent);
+    }
 }
