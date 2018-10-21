@@ -27,4 +27,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, QRCreateActivity.class);
         startActivity(intent);
     }
+
+    public void qrScanMethod(View view){
+        Intent intent = new Intent(this, QRScanActivity.class);
+        startActivity(intent);
+    }
 }
