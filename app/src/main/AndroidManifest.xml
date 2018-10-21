@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.gatech.seclass.hackgt">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,8 +22,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".homeActivity" />
-        <activity android:name=".vendorActivity"></activity>
-        <activity android:name=".QRCreateActivity"></activity>
+        <activity android:name=".vendorActivity" />
+        <activity android:name=".QRCreateActivity" />
+        <activity android:name=".QRScanActivity" />
+        <activity android:name=".QRScanActivity2"></activity>
     </application>
 
 </manifest>
