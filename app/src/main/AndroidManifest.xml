@@ -24,7 +24,6 @@
         <activity android:name=".homeActivity" />
         <activity android:name=".vendorActivity" />
         <activity android:name=".QRCreateActivity" />
-        <activity android:name=".QRScanActivity" />
         <activity android:name=".QRScanActivity2"></activity>
     </application>
 
