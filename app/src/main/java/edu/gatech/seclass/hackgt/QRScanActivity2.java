@@ -25,6 +25,8 @@ public class QRScanActivity2 extends AppCompatActivity implements ZXingScannerVi
     private static final int REQUEST_CAMERA = 1;
     private ZXingScannerView scannerView;
     private static int camId = Camera.CameraInfo.CAMERA_FACING_BACK;
+    public static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,8 +145,12 @@ public class QRScanActivity2 extends AppCompatActivity implements ZXingScannerVi
                 startActivity(browserIntent);
             }
         });
-        builder.setMessage(result.getText());
-        AlertDialog alert1 = builder.create();
-        alert1.show();
+//        builder.setMessage(result.getText());
+//        AlertDialog alert1 = builder.create();
+//        alert1.show();
+        Log.d("-------------------",result.getText());
+        Intent intent = new Intent(this, billActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, result.getText());
+        startActivity(intent);
     }
 }
